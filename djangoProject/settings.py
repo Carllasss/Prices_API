@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_cron',
+    'django_crontab',
     'webexample',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
+]
+
+CRON_CLASSES = [
+    'webexample.utils.task.MyCronJob'
 ]
 
 MIDDLEWARE = [
