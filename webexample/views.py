@@ -10,6 +10,14 @@ from .serializers import serializer_prices
 from .forms import PriceForm
 
 
+
+    # def start(request):
+    #     all_rows = Prices.objects.all()
+    #     all_fields = Prices._meta.get_fields()
+    #     content = {'all_rows': all_rows,
+    #                'all_fields': all_fields}
+    #
+    #     return render(request, )
 class PricesListView(View):
 
     async def get(self, request):

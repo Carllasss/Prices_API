@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import environ
+from celery.schedules import crontab
+import webexample.tasks
 
 env=environ.Env(
     DEBUG=(bool, False)
@@ -28,6 +30,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 API_KEY = os.environ.get('API_KEY')
 
+import django
+django.setup()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -49,10 +53,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
 ]
-
-CRON_CLASSES = [
-    'webexample.utils.task.MyCronJob'
-]
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,6 +68,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djangoProject.urls'
+
+CELERY_BEAT_SCHEDULE = {
+    "tasks": {
+        "task": "webexample.tasks.mytask",
+        "schedule": crontab(minute="*/1"),
+    },
+}
 
 TEMPLATES = [
     {
