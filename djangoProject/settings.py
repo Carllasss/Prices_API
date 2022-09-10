@@ -30,8 +30,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 API_KEY = os.environ.get('API_KEY')
 
-import django
-django.setup()
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -51,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'djangoProject'
+
 
 ]
 CELERY_BROKER_URL = "redis://redis:6379"
@@ -72,7 +73,7 @@ ROOT_URLCONF = 'djangoProject.urls'
 CELERY_BEAT_SCHEDULE = {
     "tasks": {
         "task": "webexample.tasks.mytask",
-        "schedule": crontab(minute="*/1"),
+        "schedule": 10.0,
     },
 }
 

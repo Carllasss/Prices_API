@@ -6,6 +6,13 @@ from googleapiclient.discovery import build
 
 sheet_id = '1hmTUTWuEnhoO5VmZLjT-kHN2dbPuIV5ij2Nx6j7K-hI'
 
+def get_id_list(table):
+    res = []
+    for i in table:
+        res.append(i[1])
+    return res
+
+
 def get_table(sheet_id):
     resp = get_service_sacc().spreadsheets().values().get(spreadsheetId=sheet_id, range="A1:Z999").execute()
     return resp['values'][1::]

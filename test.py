@@ -1,4 +1,3 @@
-from locale import atof, setlocale, LC_NUMERIC
 from datetime import date
 import requests
 import xmltodict
@@ -10,3 +9,5 @@ def get_course():
     answer = xmltodict.parse(response.content)
     course = float(str(answer['ValCurs']['Record']['Value']).replace(',', '.'))
     return course
+
+print(get_course())
