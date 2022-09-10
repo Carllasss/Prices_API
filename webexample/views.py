@@ -11,13 +11,10 @@ from .forms import PriceForm
 
 
 
-    # def start(request):
-    #     all_rows = Prices.objects.all()
-    #     all_fields = Prices._meta.get_fields()
-    #     content = {'all_rows': all_rows,
-    #                'all_fields': all_fields}
-    #
-    #     return render(request, )
+def get_info(request):
+    objs = Prices.objects.all()
+    return render(request, 'base.html', {'objs':objs})
+
 class PricesListView(View):
 
     async def get(self, request):
