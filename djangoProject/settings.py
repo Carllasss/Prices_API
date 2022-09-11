@@ -13,31 +13,21 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import environ
-from celery.schedules import crontab
-import webexample.tasks
 
-env=environ.Env(
+env = environ.Env(
     DEBUG=(bool, False)
 )
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 API_KEY = os.environ.get('API_KEY')
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django_cron',
@@ -52,7 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'djangoProject'
 
-
 ]
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
@@ -61,8 +50,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-
-    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -72,7 +59,7 @@ ROOT_URLCONF = 'djangoProject.urls'
 
 CELERY_BEAT_SCHEDULE = {
     "tasks": {
-        "task": "webexample.tasks.mytask",
+        "task": "webexample.tasks.update_table",
         "schedule": 10.0,
     },
 }
@@ -96,9 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -106,21 +90,16 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 12345,
         'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        #'HOST':'127.0.0.1',
+        # 'HOST':'127.0.0.1',
         'PORT': 5432,
 
-
-        #'NAME': os.environ.get('POSTGRES_NAME'),
-        #'USER': os.environ.get('POSTGRES_USER'),
-        #'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        #'HOST': os.environ.get('db', '127.0.0.1'),
-        #'PORT': 5432,
+        # 'NAME': os.environ.get('POSTGRES_NAME'),
+        # 'USER': os.environ.get('POSTGRES_USER'),
+        # 'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        # 'HOST': os.environ.get('db', '127.0.0.1'),
+        # 'PORT': 5432,
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -137,10 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
@@ -149,29 +124,18 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-
 STATIC_URL = 'static/'
-#url для управления
-MEDIA_URL = '/media/'
-# Путь хранения картинок
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = False
 
-if LOGGING == True:
+if LOGGING:
     LOGGING = {
         'version': 1,
         'filters': {
             'require_debug_true': {
-                '()': 'django.utils.log.RequireDebugTrue',
+                '()': 'django.clients.log.RequireDebugTrue',
             }
         },
         'handlers': {
