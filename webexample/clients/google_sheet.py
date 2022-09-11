@@ -1,12 +1,21 @@
+from pathlib import Path
 import httplib2
 from oauth2client.service_account import ServiceAccountCredentials
-import os
 from googleapiclient.discovery import build
+import environ
+import os
 
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
-sheet_id = '1hmTUTWuEnhoO5VmZLjT-kHN2dbPuIV5ij2Nx6j7K-hI'
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+sheet_id = os.environ.get('SHEET_ID')
 
 def get_id_list(table):
+    """Gets the list of IDs from the table"""
     res = []
     for i in table:
         res.append(i[1])
@@ -14,11 +23,13 @@ def get_id_list(table):
 
 
 def get_table(sheet_id):
+    """Gets a list of lines from Google sheet"""
     resp = get_service_sacc().spreadsheets().values().get(spreadsheetId=sheet_id, range="A1:Z999").execute()
     return resp['values'][1::]
 
 
 def get_service_sacc():
+    """Gets access to the table through a Google Cloud service account"""
     creds_json = os.path.dirname(__file__) + "/resc.json"
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
 

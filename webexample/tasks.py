@@ -17,6 +17,7 @@ logger = get_task_logger(__name__)
 
 @shared_task()
 def update_table():
+    """A function for updating data in the database based on data from Google sheet"""
     from webexample.models import Prices
     course = get_course()
     table = get_table(os.environ.get('SERVICE_KEY'))

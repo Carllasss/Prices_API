@@ -1,9 +1,9 @@
-from locale import atof, setlocale, LC_NUMERIC
 from datetime import date, timedelta
 import requests
 import xmltodict
 
 def get_course():
+    """Receives the current dollar exchange rate through the Central Bank API"""
     today = date.today()
     day = today.strftime("%d/%m/%Y")
     url = f'https://www.cbr.ru/scripts/XML_dynamic.asp?date_req1={day}&date_req2={day}&VAL_NM_RQ=R01235'

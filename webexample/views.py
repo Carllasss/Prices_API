@@ -1,22 +1,24 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
-from django.views import View
-from django.http import HttpResponse
 import json
-import requests
 
+import requests
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views import View
+
+from .forms import PriceForm
 from .models import Prices
 from .serializers import serializer_prices
-from .forms import PriceForm
-
 
 
 def get_info(request):
+    """Gets lines from DB for HTML"""
     objs = Prices.objects.all()
-    return render(request, 'base.html', {'objs':objs})
+    return render(request, 'base.html', {'objs': objs})
+
 
 class PricesListView(View):
-
+    """Basic model class with standard methods for API"""
     async def get(self, request):
         limit = int(request.GET.get('limit', 20))
         offset = int(request.GET.get('offset', 0))
