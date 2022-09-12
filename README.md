@@ -13,14 +13,12 @@ Project is created with:
 * Celery version: 5.2.7
 	
 ## Setup
-First you need to register in Google Cloud Platform, create and configure a new API.
-
-After that, you need to add the credentials file to the clients folder, and Google sheet id to the .env file
-
-To run this project localy you need to download it, and then:
+You can run the project with the following commands:
 
 ```
-$ cd ../project
+$ git pull https://github.com/Carllasss/Prices_API
+
+$ cd ../<folder_with_project>
 $ docker-compose up
 ```
 Now you can go to http://127.0.0.1:8000/list and see a new table that will respond to changes in your Google sheet.
