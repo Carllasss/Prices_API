@@ -26,3 +26,5 @@ $ docker-compose up
 Now you can go to http://127.0.0.1:8000/list and see a new table that will respond to changes in your Google sheet.
 
 ![Alt text](demo_image.PNG "DEMO")
+
+Link to Google Sheet: https://docs.google.com/spreadsheets/d/1hmTUTWuEnhoO5VmZLjT-kHN2dbPuIV5ij2Nx6j7K-hI/edit#gid=0
